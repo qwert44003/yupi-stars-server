@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: yupi-stars-payments
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    disk:
+      name: yupi-stars-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: WEB_APP_URL
+        value: https://qwert44003.github.io/yupistars-/
+      - key: DATABASE_PATH
+        value: /var/data/yupi_stars.sqlite3
+      - key: SUPPORT_USERNAME
+        sync: false
